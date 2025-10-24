@@ -1,34 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
+import Navbar from "@/components/Navbar";
+import { Text, View } from "react-native";
 
-export default function Page() {
+export default function Index() {
   return (
-    <View style={styles.container}>
-      <View style={styles.main}>
-        <Text style={styles.title}>Hello World</Text>
-        <Text style={styles.subtitle}>This is the first page of your app.</Text>
+    <View>
+      <Navbar />
+      <View style={{ padding: 20 }}>
+        <Text>Bienvenue sur l&apos;application de Carpiquet Basket</Text>
+        <Text>Cette application vous permet de suivre les actualités et les événements de votre club de basket préférée.</Text>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    padding: 24,
-  },
-  main: {
-    flex: 1,
-    justifyContent: "center",
-    maxWidth: 960,
-    marginHorizontal: "auto",
-  },
-  title: {
-    fontSize: 64,
-    fontWeight: "bold",
-  },
-  subtitle: {
-    fontSize: 36,
-    color: "#38434D",
-  },
-});
