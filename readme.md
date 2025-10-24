@@ -25,4 +25,9 @@ Elle contiendra notamment :
 
 - CRUD d'article et publication dans une section actualité.
 - Création de compte nécessite une validation par un administrateur.
+- Remplissage des résultats de matchs par les coachs.
+- Gestion des équipes (ajout/suppression de joueurs, modification des rôles, etc.)
+- Page d'information des joueurs et des équipes.
+- Notifications pour les nouveaux articles, événements, et résultats de matchs.
+
 
