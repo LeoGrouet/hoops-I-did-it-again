@@ -7,7 +7,7 @@ export default function Navbar() {
     <View
       style={styles.container}>
       <Image
-        style={{ width: 80, height: 80 }}
+        style={{ width: 70, height: 70 }}
         source={require("@/assets/images/carpiquetlogo.png")}
         alt="Logo"
       />
@@ -20,10 +20,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     backgroundColor: '#ffffff',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     width: '100%',
     alignItems: 'center',
-    padding: 10,
+    paddingBottom: 10
   },
 
   button: {
