@@ -9,7 +9,6 @@ export default function Index() {
       <View style={{ padding: 20 }}>
         <Text>Bienvenue sur l&apos;application de Carpiquet Basket</Text>
         <Text>Cette application vous permet de suivre les actualités et les événements de votre club de basket préférée.</Text>
-        <Link href="/test/page">Go to Test Page</Link>
       </View>
     </View>
   );

@@ -11,11 +11,6 @@ export default function Navbar() {
         source={require("@/assets/images/carpiquetlogo.png")}
         alt="Logo"
       />
-      <View>
-        <Link href="/authentication/login">
-          <Text style={styles.button}>Se connecter</Text>
-        </Link>
-      </View>
     </View>
   );
 }
