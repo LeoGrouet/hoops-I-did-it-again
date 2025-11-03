@@ -6,11 +6,13 @@ export default function Navbar() {
   return (
     <View
       style={styles.container}>
+      <Text>Hoops I</Text>
       <Image
-        style={{ width: 70, height: 70 }}
+        style={{ width: 70, height: 70, marginLeft: 15, marginRight: 15 }}
         source={require("@/assets/images/carpiquetlogo.png")}
         alt="Logo"
       />
+      <Text>did it again</Text>
     </View>
   );
 }
