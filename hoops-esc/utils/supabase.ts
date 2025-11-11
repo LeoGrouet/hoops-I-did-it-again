@@ -14,4 +14,3 @@ export const supabase = createClient(
       lock: processLock,
     },
   })
-export default supabase

@@ -1,7 +1,7 @@
 import Card from "@/components/Card";
 import GamesInfo, { GamesType } from "@/components/GamesInfo";
 import Navbar from "@/components/Navbar";
-import { getHomeGames } from "@/utils/HomeGame/getHomeGames";
+import { getHomeGames } from "@/utils/fetchs/HomeGame/getHomeGames";
 import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 
