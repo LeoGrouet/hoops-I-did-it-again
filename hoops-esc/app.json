@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "hoops-esc",
-    "slug": "hoops-esc",
+    "name": "my-app",
+    "slug": "my-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "hoopsesc",
+    "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -38,8 +38,7 @@
             "backgroundColor": "#000000"
           }
         }
-      ],
-      "expo-sqlite"
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
