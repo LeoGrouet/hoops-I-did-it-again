@@ -6,11 +6,13 @@ export default function Navbar() {
   return (
     <View
       style={styles.container}>
+      <Text>Hoops I</Text>
       <Image
-        style={{ width: 80, height: 80 }}
+        style={{ width: 70, height: 70, marginLeft: 15, marginRight: 15 }}
         source={require("@/assets/images/carpiquetlogo.png")}
         alt="Logo"
       />
+      <Text>did it again</Text>
     </View>
   );
 }
@@ -20,10 +22,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     backgroundColor: '#ffffff',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     width: '100%',
     alignItems: 'center',
-    padding: 10,
+    paddingBottom: 10
   },
 
   button: {

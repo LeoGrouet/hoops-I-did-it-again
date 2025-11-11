@@ -1,5 +1,6 @@
-import { Stack } from "expo-router";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Stack, Tabs } from "expo-router";
 
 export default function RootLayout() {
-  return <Stack />;
+  return <Tabs />
 }
