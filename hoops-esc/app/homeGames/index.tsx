@@ -5,7 +5,7 @@ import { getHomeGames } from "@/utils/fetchs/HomeGame/getHomeGames";
 import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 
-export default function HomeGamesScheduler() {
+export default function IndexHomeGames() {
   const [homeGames, setHomeGames] = useState<GamesType[]>([]);
 
   useEffect(() => {

@@ -4,8 +4,6 @@ import { GamesType } from "@/components/GamesInfo";
 export default function HomeGamesScheduledInfo(item: GamesType) {
 
   return <>
-    <GameDetail
-      item={item}
-    />
+    <GameDetail />
   </>;
 }
