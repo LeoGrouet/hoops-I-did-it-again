@@ -5,17 +5,17 @@ import 'dayjs/locale/fr';
 import { router } from "expo-router";
 
 export type GamesType = {
-  id: Number,
-  date: Date,
-  hour: string,
-  opponent: string,
-  category: string,
-  "HomeGames_category_fkey"?: {
-    Name: string;
-  } | null,
-  referee: string[],
-  table_official: string[],
-  room_official: string,
+  id: number
+  date: Date
+  hour: string
+  opponent: string
+  category: string
+  HomeGames_category_fkey?: {
+    Name: string
+  } | null
+  referee: string[]
+  table_official: string[]
+  room_official: string
 }
 
 export default function GamesInfo(item: GamesType) {

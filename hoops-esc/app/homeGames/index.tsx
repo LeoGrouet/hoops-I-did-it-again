@@ -11,6 +11,9 @@ export default function IndexHomeGames() {
   useEffect(() => {
     const fetchGames = async () => {
       const data = await getHomeGames();
+      if (!data) {
+        throw new Error("No home games found");
+      }
       setHomeGames(data);
     };
 

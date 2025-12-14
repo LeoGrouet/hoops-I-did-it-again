@@ -20,6 +20,6 @@ export async function getHomeGames(): Promise<HomeGameWithCategory[]> {
     console.error('Erreur Supabase:', error);
     return [];
   }
-  console.log(data);
+
   return data ?? [];
 }

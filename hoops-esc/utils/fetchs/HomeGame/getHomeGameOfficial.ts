@@ -1,28 +1,35 @@
 import { supabase } from '@/utils/supabase';
 
-export interface HomeGameOfficialType {
-  id: number;
-  homegamesId: number;
-  HomeGamesOfficial_userId_fkey?: {
-    Firstname: string;
-    Lastname: string;
-    LicenceNb: string;
-  };
+export interface OfficialType {
   OfficialRole: string
+  Users?: {
+    Firstname: string
+    Lastname: string
+    LicenceNb: string
+  }[]
 }
 
-export async function getHomeGameOfficial(id: number): Promise<HomeGameOfficialType[]> {
+export async function getHomeGameOfficial(
+  homegameId: number
+): Promise<OfficialType[]> {
 
   const { data, error } = await supabase
-    .from('HomeGamesOfficial')
-    .select(`*,
-    HomeGamesOfficial_userId_fkey(Firstname, Lastname, LicenceNb)
-  `).eq('homegamesId', id);
+    .from('Official')
+    .select(`
+      OfficialRole,
+      Users:userId (
+        Firstname,
+        Lastname,
+        LicenceNb
+      )
+    `)
+    .eq('homegamesId', homegameId)
+
 
   if (error) {
-    console.error('Erreur Supabase:', error);
-    throw error;
+    console.error('Erreur Supabase:', error)
+    throw error
   }
 
-  return data;
+  return data ?? []
 }

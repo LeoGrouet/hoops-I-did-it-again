@@ -1,9 +1,9 @@
-import GameDetail from "@/components/GameDetail";
-import { GamesType } from "@/components/GamesInfo";
+import GameDetail from "@/components/GameDetail"
 
-export default function HomeGamesScheduledInfo(item: GamesType) {
-
-  return <>
-    <GameDetail />
-  </>;
+export default function HomeGamesScheduledInfo() {
+  return (
+    <>
+      <GameDetail />
+    </>
+  )
 }
