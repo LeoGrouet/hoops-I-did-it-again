@@ -56,7 +56,7 @@ export default function GameDetail() {
   if (!OfficialReferee && !OfficialOtm) {
     return <Text>Loading...</Text>;
   }
-  console.log(OfficialReferee, OfficialOtm, OfficialRoom);
+
   return (
 <<<<<<< HEAD
     <>
@@ -76,7 +76,7 @@ export default function GameDetail() {
       <Text style={styles.title}>Arbitres:</Text>
       {OfficialReferee?.map((official, index) => (
         <Text style={styles.official} key={`${official.OfficialRole}-${index}`}>
-          {official.Users?.Firstname} {official.Users?.Lastname} {official.Users?.LicenceNb}
+          {official?.Users?.Firstname} {official.Users?.Lastname} {official.Users?.LicenceNb}
         </Text>
       ))}
 

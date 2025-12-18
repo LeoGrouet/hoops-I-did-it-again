@@ -1,12 +1,13 @@
 import { supabase } from '@/utils/supabase';
 
+export interface UserType {
+  Firstname: string
+  Lastname: string
+  LicenceNb: string
+}
 export interface OfficialType {
   OfficialRole: string
-  Users?: {
-    Firstname: string
-    Lastname: string
-    LicenceNb: string
-  }[]
+  Users?: UserType
 }
 
 export async function getHomeGameOfficial(
