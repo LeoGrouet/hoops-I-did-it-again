@@ -1,14 +1,5 @@
-import { supabase } from '@/utils/supabase';
-
-export interface UserType {
-  Firstname: string
-  Lastname: string
-  LicenceNb: string
-}
-export interface OfficialType {
-  OfficialRole: string
-  Users?: UserType[]
-}
+import { OfficialType } from "@/@types/OfficialType"
+import { supabase } from "../supabase"
 
 export async function getHomeGameOfficial(
   homegameId: number

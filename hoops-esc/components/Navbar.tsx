@@ -1,4 +1,3 @@
-import { Link } from "expo-router";
 import { Text, View, StyleSheet } from "react-native";
 import { Image } from 'expo-image';
 
@@ -25,7 +24,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     alignItems: 'center',
-    paddingBottom: 10
+    paddingBottom: 10,
+    paddingTop: 50,
   },
 
   button: {

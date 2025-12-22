@@ -7,7 +7,7 @@ export default function RootLayout() {
     <Tabs.Screen name="index"
       options={{
         title: "Home",
-        headerShown: true,
+        headerShown: false,
         tabBarActiveTintColor: '#e91e63',
         tabBarIcon: () => <Entypo name="home" size={24} color="black" />
       }}
@@ -15,7 +15,7 @@ export default function RootLayout() {
     <Tabs.Screen name="homeGames"
       options={{
         title: "Games",
-        headerShown: true,
+        headerShown: false,
         tabBarActiveTintColor: '#e91e63',
         tabBarIcon: () => <FontAwesome6 name="basketball" size={24} color="black" />
       }}

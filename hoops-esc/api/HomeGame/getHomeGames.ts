@@ -1,11 +1,5 @@
-import { supabase } from '@/utils/supabase';
-import { GamesType } from '@/components/GamesInfo';
-
-export interface HomeGameWithCategory extends GamesType {
-  HomeGames_category_fkey?: {
-    Name: string;
-  };
-}
+import { HomeGameWithCategory } from '@/@types/HomeGameCategory';
+import { supabase } from '../supabase';
 
 export async function getHomeGames(): Promise<HomeGameWithCategory[]> {
 

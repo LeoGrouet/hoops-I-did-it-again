@@ -1,6 +1,7 @@
+import { GamesType } from "@/@types/GamesType";
 import { getHomeGames } from "@/api/HomeGame/getHomeGames";
 import Card from "@/components/Card";
-import GamesInfo, { GamesType } from "@/components/GamesInfo";
+import GamesInfo from "@/components/GamesInfo";
 import Navbar from "@/components/Navbar";
 import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
@@ -40,9 +41,6 @@ export default function IndexHomeGames() {
                 date={game.date}
                 hour={game.hour}
                 opponent={game.opponent}
-                referee={game.referee}
-                table_official={game.table_official}
-                room_official={game.room_official}
               />
             </Card>
           )}

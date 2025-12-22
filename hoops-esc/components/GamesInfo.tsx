@@ -3,20 +3,7 @@ import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import dayjs from "dayjs";
 import 'dayjs/locale/fr';
 import { router } from "expo-router";
-
-export type GamesType = {
-  id: number
-  date: Date
-  hour: string
-  opponent: string
-  category: string
-  HomeGames_category_fkey?: {
-    Name: string
-  } | null
-  referee: string[]
-  table_official: string[]
-  room_official: string
-}
+import { GamesType } from "@/@types/GamesType";
 
 export default function GamesInfo(item: GamesType) {
   const formatted = dayjs(item.date).locale("fr").format('D MMMM YYYY');
@@ -42,23 +29,21 @@ export default function GamesInfo(item: GamesType) {
 
 const styles = StyleSheet.create({
   container: {
-    // display: 'flex',
-    // flexDirection: 'row',
-    gridTemplateRows: '1fr 1fr',
+    display: 'flex',
+    flexDirection: 'row',
     alignItems: 'center',
     height: 90,
     paddingLeft: 20,
     gap: 50,
+    width: '100%',
   },
   versus: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
     alignItems: 'center',
+    minWidth: 130,
     gap: 10,
   },
   info: {
-    display: 'flex',
-    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 5,
   }
 });
