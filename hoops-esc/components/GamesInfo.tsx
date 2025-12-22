@@ -42,8 +42,9 @@ export default function GamesInfo(item: GamesType) {
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
-    flexDirection: 'row',
+    // display: 'flex',
+    // flexDirection: 'row',
+    gridTemplateRows: '1fr 1fr',
     alignItems: 'center',
     height: 90,
     paddingLeft: 20,

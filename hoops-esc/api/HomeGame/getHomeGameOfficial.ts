@@ -7,7 +7,7 @@ export interface UserType {
 }
 export interface OfficialType {
   OfficialRole: string
-  Users?: UserType
+  Users?: UserType[]
 }
 
 export async function getHomeGameOfficial(
@@ -31,6 +31,9 @@ export async function getHomeGameOfficial(
     console.error('Erreur Supabase:', error)
     throw error
   }
+  if (!data) {
+    return []
+  }
 
-  return data ?? []
+  return data
 }

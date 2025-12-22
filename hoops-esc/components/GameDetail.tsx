@@ -8,8 +8,12 @@ import { translateRole } from "@/utils/translateRole";
 import { StyleSheet, Text, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
+<<<<<<< HEAD
 import { OfficialType, getHomeGameOfficial } from "@/utils/HomeGame/getHomeGameOfficial";
 >>>>>>> a900ca1 (feat: display officials done)
+=======
+import { OfficialType, getHomeGameOfficial } from "@/api/HomeGame/getHomeGameOfficial";
+>>>>>>> a265170 (feat: feature done)
 
 export default function GameDetail() {
   const { id } = useLocalSearchParams<{ id?: string }>()
