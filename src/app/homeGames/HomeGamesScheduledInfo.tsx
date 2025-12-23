@@ -1,3 +1,4 @@
+import colors from "@/hoops-esc/theme/colors";
 import { OfficialType } from "@/src/@types/OfficialType";
 import { getHomeGameOfficial } from "@/src/api/HomeGame/getHomeGameOfficial";
 import Navbar from "@/src/components/Navbar";
@@ -8,31 +9,29 @@ import { StyleSheet, Text, View } from "react-native";
 export default function HomeGamesScheduledInfo() {
   const { id } = useLocalSearchParams<{ id?: string }>()
 
-  const homeGameId = id ? Number(id) : null
-
-  const [OfficialReferee, setOfficialReferee] = useState<OfficialType[]>();
-  const [OfficialOtm, setOfficialOtm] = useState<OfficialType[]>();
-  const [OfficialRoom, setOfficialRoom] = useState<OfficialType[]>();
+  const [OfficialReferee, setOfficialReferee] = useState<OfficialType[]>()
+  const [OfficialOtm, setOfficialOtm] = useState<OfficialType[]>()
+  const [OfficialRoom, setOfficialRoom] = useState<OfficialType[]>()
 
   useEffect(() => {
     const fetchOfficials = async () => {
-      const data = await getHomeGameOfficial(Number(id));
+      const data = await getHomeGameOfficial(Number(id))
 
       setOfficialReferee(
-        data.filter(official => official.OfficialRole === "Referee")
-      );
+        data.filter(official => official.OfficialRole === 'Referee'),
+      )
 
       setOfficialOtm(
-        data.filter(official => official.OfficialRole === "TableOfficer")
-      );
+        data.filter(official => official.OfficialRole === 'TableOfficer'),
+      )
 
       setOfficialRoom(
-        data.filter(official => official.OfficialRole === "RoomOfficier")
-      );
-    };
+        data.filter(official => official.OfficialRole === 'RoomOfficier'),
+      )
+    }
 
-    fetchOfficials();
-  }, [homeGameId]);
+    fetchOfficials()
+  }, [id])
 
   return (
     <View style={styles.page}>
@@ -47,7 +46,6 @@ export default function HomeGamesScheduledInfo() {
         : <Text style={styles.official}>Aucun arbitre assigné</Text>
       }
 
-
       <Text style={styles.title}>Table de marque:</Text>
       {OfficialOtm && OfficialOtm.length > 0 ?
         (OfficialOtm?.map((official, index) => (
@@ -58,7 +56,6 @@ export default function HomeGamesScheduledInfo() {
         : <Text style={styles.official}>Aucun officiel de table assigné</Text>
       }
 
-
       <Text style={styles.title}>Surveillant de salle:</Text>
       {OfficialRoom && OfficialRoom.length > 0 ?
         (OfficialRoom?.map((official, index) => (
@@ -68,8 +65,8 @@ export default function HomeGamesScheduledInfo() {
         )))
         : <Text style={styles.official}>Aucun officiel de table assigné</Text>
       }
-    </View >
-  );
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -78,7 +75,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.white,
     borderRadius: 20,
     margin: 10,
   },
@@ -86,4 +83,4 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginBottom: 5,
   },
-});
+})

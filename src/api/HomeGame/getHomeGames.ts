@@ -8,12 +8,12 @@ export async function getHomeGames(): Promise<HomeGameWithCategory[]> {
     .select(`
     *,
     HomeGames_category_fkey(Name)
-  `);
+  `)
 
   if (error) {
-    console.error('Erreur Supabase:', error);
-    return [];
+    console.error('Erreur Supabase:', error)
+    return []
   }
 
-  return data ?? [];
+  return data ?? []
 }

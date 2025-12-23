@@ -2,7 +2,7 @@ import { OfficialType } from "@/src/@types/OfficialType"
 import { supabase } from "../supabase"
 
 export async function getHomeGameOfficial(
-  homegameId: number
+  homegameId: number,
 ): Promise<OfficialType[]> {
 
   const { data, error } = await supabase
@@ -16,7 +16,6 @@ export async function getHomeGameOfficial(
       )
     `)
     .eq('homegamesId', homegameId)
-
 
   if (error) {
     console.error('Erreur Supabase:', error)

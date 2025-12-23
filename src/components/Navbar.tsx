@@ -4,7 +4,8 @@ import { StyleSheet, Text, View } from "react-native";
 export default function Navbar() {
   return (
     <View
-      style={styles.container}>
+      style={styles.container}
+    >
       <Text>Hoops I</Text>
       <Image
         style={{ width: 70, height: 70, marginLeft: 15, marginRight: 15 }}
@@ -13,23 +14,18 @@ export default function Navbar() {
       />
       <Text>did it again</Text>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.white,
     justifyContent: 'center',
     width: '100%',
     alignItems: 'center',
     paddingBottom: 10,
     paddingTop: 50,
   },
-
-  button: {
-    fontSize: 10,
-    color: '#000000',
-  },
-});
+})

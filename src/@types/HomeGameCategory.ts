@@ -1,7 +1,7 @@
-import { GamesType } from "./GamesType";
+import { type GamesType } from './GamesType'
 
 export interface HomeGameWithCategory extends GamesType {
   HomeGames_category_fkey?: {
-    Name: string;
-  };
+    Name: string
+  }
 }

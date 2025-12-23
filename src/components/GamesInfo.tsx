@@ -6,7 +6,7 @@ import { router } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function GamesInfo(item: GamesType) {
-  const formatted = dayjs(item.date).locale("fr").format('D MMMM YYYY');
+  const formatted = dayjs(item.date).locale('fr').format('D MMMM YYYY')
 
   return (
     <TouchableOpacity style={styles.container} onPress={() => router.push(`/homeGames/HomeGamesScheduledInfo?id=${item.id}`)}>
@@ -23,8 +23,8 @@ export default function GamesInfo(item: GamesType) {
         <Text>{item.hour}H</Text>
         <Text>{item.category}</Text>
       </View>
-    </TouchableOpacity >
-  );
+    </TouchableOpacity>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -45,5 +45,5 @@ const styles = StyleSheet.create({
   info: {
     alignItems: 'center',
     gap: 5,
-  }
-});
+  },
+})
