@@ -9,7 +9,7 @@ export default function RootLayout() {
       }}
     />
     <Stack.Screen
-      name="HomeGames/HomeGamesScheduledInfo"
+      name="HomeGamesScheduledInfo"
       options={{
         headerShown: false,
       }}

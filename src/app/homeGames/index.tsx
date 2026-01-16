@@ -1,8 +1,8 @@
-import { GamesType } from "@/@types/GamesType";
-import { getHomeGames } from "@/api/HomeGame/getHomeGames";
-import Card from "@/components/Card";
-import GamesInfo from "@/components/GamesInfo";
-import Navbar from "@/components/Navbar";
+import { GamesType } from "@/src/@types/GamesType";
+import { getHomeGames } from "@/src/api/HomeGame/getHomeGames";
+import Card from "@/src/components/Card";
+import GamesInfo from "@/src/components/GamesInfo";
+import Navbar from "@/src/components/Navbar";
 import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 

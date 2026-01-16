@@ -1,33 +1,50 @@
-# Hoops - I did it again
+# Welcome to your Expo app 👋
 
-Cette application à pour but de centraliser les informations utiles aux membres du club de basket de Carpiquet.
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-Elle contiendra notamment :
-- Le calendrier des matchs et événements
-- Les résultats des matchs
-- Les actualités du club
-- Les informations sur les joueurs et les équipes
-- Des channels de discussion pour chaques equipes
-- Un systeme de connexion pour les personnes licenciés au club de Carpiquet
+## Get started
 
-## MVP
+1. Install dependencies
 
-**Licenciés :**
+   ```bash
+   npm install
+   ```
 
-- Connexion des personnes licenciées au club via un systeme d'authentification. ( CSV des licenciés fourni par le club )
-- Page d'information des évènements.
-- Affichage du calendrier des matchs et événements.
-- Gestion des bénévoles pour les matchs du weekend.
-- Channel de discussion pour chaque équipe.
-- Channel de discussion pour la direction du club.
+2. Start the app
 
-**Membres du club :**
+   ```bash
+   npx expo start
+   ```
 
-- CRUD d'article et publication dans une section actualité.
-- Création de compte nécessite une validation par un administrateur.
-- Remplissage des résultats de matchs par les coachs.
-- Gestion des équipes (ajout/suppression de joueurs, modification des rôles, etc.)
-- Page d'information des joueurs et des équipes.
-- Notifications pour les nouveaux articles, événements, et résultats de matchs.
+In the output, you'll find options to open the app in a
 
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
+You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+
+## Get a fresh project
+
+When you're ready, run:
+
+```bash
+npm run reset-project
+```
+
+This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+
+## Learn more
+
+To learn more about developing your project with Expo, look at the following resources:
+
+- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
+- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+
+## Join the community
+
+Join our community of developers creating universal apps.
+
+- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
+- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.

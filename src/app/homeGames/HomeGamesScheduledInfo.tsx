@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View } from "react-native";
+import { OfficialType } from "@/src/@types/OfficialType";
+import { getHomeGameOfficial } from "@/src/api/HomeGame/getHomeGameOfficial";
+import Navbar from "@/src/components/Navbar";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { getHomeGameOfficial } from "@/api/HomeGame/getHomeGameOfficial";
-import { OfficialType } from "@/@types/OfficialType";
+import { StyleSheet, Text, View } from "react-native";
 
 export default function HomeGamesScheduledInfo() {
   const { id } = useLocalSearchParams<{ id?: string }>()
@@ -34,7 +35,8 @@ export default function HomeGamesScheduledInfo() {
   }, [homeGameId]);
 
   return (
-    <View>
+    <View style={styles.page}>
+      <Navbar />
       <Text style={styles.title}>Arbitres:</Text>
       {OfficialReferee && OfficialReferee.length > 0 ?
         (OfficialReferee?.map((official, index) => (
@@ -71,6 +73,10 @@ export default function HomeGamesScheduledInfo() {
 }
 
 const styles = StyleSheet.create({
+  page: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
   title: {
     backgroundColor: '#ffffff',
     borderRadius: 20,

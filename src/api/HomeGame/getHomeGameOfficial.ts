@@ -1,4 +1,4 @@
-import { OfficialType } from "@/@types/OfficialType"
+import { OfficialType } from "@/src/@types/OfficialType"
 import { supabase } from "../supabase"
 
 export async function getHomeGameOfficial(

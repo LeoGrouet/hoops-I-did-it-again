@@ -1,4 +1,4 @@
-import { HomeGameWithCategory } from '@/@types/HomeGameCategory';
+import { HomeGameWithCategory } from '@/src/@types/HomeGameCategory';
 import { supabase } from '../supabase';
 
 export async function getHomeGames(): Promise<HomeGameWithCategory[]> {
