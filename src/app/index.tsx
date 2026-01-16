@@ -1,5 +1,6 @@
-import Navbar from "@/src/components/Navbar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from 'react-native'
+
+import Navbar from '@/src/components/Navbar'
 
 export default function Index() {
   return (

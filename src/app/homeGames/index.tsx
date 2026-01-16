@@ -1,10 +1,11 @@
-import { GamesType } from "@/src/@types/GamesType";
-import { getHomeGames } from "@/src/api/HomeGame/getHomeGames";
-import Card from "@/src/components/Card";
-import GamesInfo from "@/src/components/GamesInfo";
-import Navbar from "@/src/components/Navbar";
-import { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { useEffect, useState } from 'react'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
+
+import { type GamesType } from '@/src/@types/GamesType'
+import { getHomeGames } from '@/src/api/HomeGame/getHomeGames'
+import Card from '@/src/components/Card'
+import GamesInfo from '@/src/components/GamesInfo'
+import Navbar from '@/src/components/Navbar'
 
 export default function IndexHomeGames() {
   const [homeGames, setHomeGames] = useState<GamesType[]>([])

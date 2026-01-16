@@ -22,7 +22,7 @@ export default [
       globals: { ...globals.node, ...pluginJest.environments.globals.globals },
       parserOptions: {
         parser: tsParser,
-        project: './tsconfig.json',
+        project: ['./tsconfig.json', './babel.config.js'],
         ecmaFeatures: {
           jsx: true,
         },

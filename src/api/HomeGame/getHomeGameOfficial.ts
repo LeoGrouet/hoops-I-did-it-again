@@ -1,5 +1,6 @@
-import { OfficialType } from "@/src/@types/OfficialType"
-import { supabase } from "../supabase"
+import { type OfficialType } from '@/src/@types/OfficialType'
+
+import { supabase } from '../supabase'
 
 export async function getHomeGameOfficial(
   homegameId: number,

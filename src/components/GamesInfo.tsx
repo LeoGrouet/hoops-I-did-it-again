@@ -1,9 +1,11 @@
-import { GamesType } from "@/src/@types/GamesType";
-import dayjs from "dayjs";
-import 'dayjs/locale/fr';
-import { Image } from "expo-image";
-import { router } from "expo-router";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import 'dayjs/locale/fr'
+
+import dayjs from 'dayjs'
+import { Image } from 'expo-image'
+import { router } from 'expo-router'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+
+import { type GamesType } from '@/src/@types/GamesType'
 
 export default function GamesInfo(item: GamesType) {
   const formatted = dayjs(item.date).locale('fr').format('D MMMM YYYY')
@@ -13,7 +15,7 @@ export default function GamesInfo(item: GamesType) {
       <View style={styles.versus}>
         <Image
           style={{ width: 50, height: 50 }}
-          source={require("../assets/images/carpiquetlogo.png")}
+          source={require('../assets/images/carpiquetlogo.png')}
           alt="Logo"
         />
         <Text>VS {item.opponent}</Text>

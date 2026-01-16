@@ -1,5 +1,6 @@
 import { StyleSheet, View } from 'react-native'
-import colors from '@/theme/colors'
+
+import colors from '@/hoops-esc/theme/colors'
 
 export default function Card({ children }: { children: React.ReactNode }) {
   return (
