@@ -1,35 +1,30 @@
-import { Image } from 'expo-image';
-import { StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from 'react-native'
+import colors from '../assets/theme/colors'
 
 export default function Navbar() {
   return (
     <View
-      style={styles.container}>
+      style={styles.container}
+    >
       <Text>Hoops I</Text>
       <Image
         style={{ width: 70, height: 70, marginLeft: 15, marginRight: 15 }}
-        source={require("../assets/images/carpiquetlogo.png")}
-        alt="Logo"
+        source={require('../assets/images/carpiquetlogo.png')}
       />
       <Text>did it again</Text>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.white,
     justifyContent: 'center',
     width: '100%',
     alignItems: 'center',
     paddingBottom: 10,
     paddingTop: 50,
   },
-
-  button: {
-    fontSize: 10,
-    color: '#000000',
-  },
-});
+})

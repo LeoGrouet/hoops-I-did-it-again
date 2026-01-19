@@ -1,15 +1,16 @@
-import { OfficialType } from "@/src/@types/OfficialType"
-import { supabase } from "../supabase"
+import { type OfficialType } from '@/src/@types/OfficialType'
+
+import { supabase } from '../supabase'
 
 export async function getHomeGameOfficial(
-  homegameId: number
+  homegameId: number,
 ): Promise<OfficialType[]> {
 
   const { data, error } = await supabase
     .from('Official')
     .select(`
       OfficialRole,
-      Users:userId (
+      User:userId (
         Firstname,
         Lastname,
         LicenceNb
@@ -17,14 +18,12 @@ export async function getHomeGameOfficial(
     `)
     .eq('homegamesId', homegameId)
 
-
   if (error) {
     console.error('Erreur Supabase:', error)
     throw error
   }
-  if (!data) {
-    return []
-  }
 
+  // @ts-ignore
   return data
+
 }

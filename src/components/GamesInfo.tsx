@@ -1,30 +1,31 @@
-import { GamesType } from "@/src/@types/GamesType";
-import dayjs from "dayjs";
-import 'dayjs/locale/fr';
-import { Image } from "expo-image";
-import { router } from "expo-router";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import 'dayjs/locale/fr'
+
+import dayjs from 'dayjs'
+import { router } from 'expo-router'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+
+import { type GamesType } from '@/src/@types/GamesType'
 
 export default function GamesInfo(item: GamesType) {
-  const formatted = dayjs(item.date).locale("fr").format('D MMMM YYYY');
+  const formatted = dayjs(item.date).locale('fr').format('D MMMM YYYY')
 
   return (
     <TouchableOpacity style={styles.container} onPress={() => router.push(`/homeGames/HomeGamesScheduledInfo?id=${item.id}`)}>
       <View style={styles.versus}>
         <Image
           style={{ width: 50, height: 50 }}
-          source={require("../assets/images/carpiquetlogo.png")}
+          source={require('../assets/images/carpiquetlogo.png')}
           alt="Logo"
         />
         <Text>VS {item.opponent}</Text>
       </View>
       <View style={styles.info}>
         <Text>{formatted}</Text>
-        <Text>{item.hour}H</Text>
+        <Text>{item.hour}Heure</Text>
         <Text>{item.category}</Text>
       </View>
-    </TouchableOpacity >
-  );
+    </TouchableOpacity>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -45,5 +46,5 @@ const styles = StyleSheet.create({
   info: {
     alignItems: 'center',
     gap: 5,
-  }
-});
+  },
+})
