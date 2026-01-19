@@ -1,11 +1,10 @@
+import { type OfficialType } from '@/src/@types/OfficialType'
+import { getHomeGameOfficial } from '@/src/api/HomeGame/getHomeGameOfficial'
+import colors from '@/src/assets/theme/colors'
+import Navbar from '@/src/components/Navbar'
 import { useLocalSearchParams } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-
-import colors from '@/hoops-esc/theme/colors'
-import { type OfficialType } from '@/src/@types/OfficialType'
-import { getHomeGameOfficial } from '@/src/api/HomeGame/getHomeGameOfficial'
-import Navbar from '@/src/components/Navbar'
 
 export default function HomeGamesScheduledInfo() {
   const { id } = useLocalSearchParams<{ id?: string }>()
@@ -39,31 +38,31 @@ export default function HomeGamesScheduledInfo() {
       <Navbar />
       <Text style={styles.title}>Arbitres:</Text>
       {OfficialReferee && OfficialReferee.length > 0 ?
-          (OfficialReferee?.map((official, index) => (
-            <Text style={styles.official} key={`${official.OfficialRole}-${index}`}>
-              {official?.Users?.Firstname} {official.Users?.Lastname} {official.Users?.LicenceNb}
-            </Text>
-          )))
+        (OfficialReferee?.map((official, index) => (
+          <Text style={styles.official} key={`${official.OfficialRole}-${index}`}>
+            {official?.User?.Firstname} {official.User?.Lastname} {official.User?.LicenceNb}
+          </Text>
+        )))
         : <Text style={styles.official}>Aucun arbitre assigné</Text>
       }
 
       <Text style={styles.title}>Table de marque:</Text>
       {OfficialOtm && OfficialOtm.length > 0 ?
-          (OfficialOtm?.map((official, index) => (
-            <Text style={styles.official} key={`${official.OfficialRole}-${index}`}>
-              {official.Users?.Firstname} {official.Users?.Lastname} {official.Users?.LicenceNb}
-            </Text>
-          )))
+        (OfficialOtm?.map((official, index) => (
+          <Text style={styles.official} key={`${official.OfficialRole}-${index}`}>
+            {official.User?.Firstname} {official.User?.Lastname} {official.User?.LicenceNb}
+          </Text>
+        )))
         : <Text style={styles.official}>Aucun officiel de table assigné</Text>
       }
 
       <Text style={styles.title}>Surveillant de salle:</Text>
       {OfficialRoom && OfficialRoom.length > 0 ?
-          (OfficialRoom?.map((official, index) => (
-            <Text style={styles.official} key={`${official.OfficialRole}-${index}`}>
-              {official.Users?.Firstname} {official.Users?.Lastname} {official.Users?.LicenceNb}
-            </Text>
-          )))
+        (OfficialRoom?.map((official, index) => (
+          <Text style={styles.official} key={`${official.OfficialRole}-${index}`}>
+            {official.User?.Firstname} {official.User?.Lastname} {official.User?.LicenceNb}
+          </Text>
+        )))
         : <Text style={styles.official}>Aucun officiel de table assigné</Text>
       }
     </View>

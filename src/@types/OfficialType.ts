@@ -1,6 +1,6 @@
-import { type UserType } from './UserType'
+import { UserType } from './UserType'
 
 export interface OfficialType {
   OfficialRole: string
-  User?: UserType
+  User: UserType
 }

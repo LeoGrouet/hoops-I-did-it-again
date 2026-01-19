@@ -10,7 +10,7 @@ export async function getHomeGameOfficial(
     .from('Official')
     .select(`
       OfficialRole,
-      Users:userId (
+      User:userId (
         Firstname,
         Lastname,
         LicenceNb
@@ -22,9 +22,8 @@ export async function getHomeGameOfficial(
     console.error('Erreur Supabase:', error)
     throw error
   }
-  if (!data) {
-    return []
-  }
 
+  // @ts-ignore
   return data
+
 }
