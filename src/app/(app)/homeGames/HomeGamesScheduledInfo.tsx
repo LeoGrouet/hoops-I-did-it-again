@@ -1,7 +1,7 @@
 import { type OfficialType } from '@/src/@types/OfficialType'
 import { getHomeGameOfficial } from '@/src/api/HomeGame/getHomeGameOfficial'
 import colors from '@/src/assets/theme/colors'
-import Navbar from '@/src/components/Navbar'
+import Navbar from '@/src/components/Navbar/Navbar'
 import { useLocalSearchParams } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'

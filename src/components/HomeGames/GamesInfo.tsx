@@ -14,7 +14,7 @@ export default function GamesInfo(item: GamesType) {
       <View style={styles.versus}>
         <Image
           style={{ width: 50, height: 50 }}
-          source={require('../assets/images/carpiquetlogo.png')}
+          source={require('../../assets/images/carpiquetlogo.png')}
           alt="Logo"
         />
         <Text>VS {item.opponent}</Text>

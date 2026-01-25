@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 
-import Navbar from '@/src/components/Navbar'
+import Navbar from '@/src/components/Navbar/Navbar'
 
 export default function Index() {
   return (

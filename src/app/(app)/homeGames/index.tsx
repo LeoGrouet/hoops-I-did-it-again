@@ -3,9 +3,9 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 
 import { type GamesType } from '@/src/@types/GamesType'
 import { getHomeGames } from '@/src/api/HomeGame/getHomeGames'
-import Card from '@/src/components/Card'
-import GamesInfo from '@/src/components/GamesInfo'
-import Navbar from '@/src/components/Navbar'
+import Card from '@/src/components/HomeGames/Card'
+import GamesInfo from '@/src/components/HomeGames/GamesInfo'
+import Navbar from '@/src/components/Navbar/Navbar'
 
 export default function IndexHomeGames() {
   const [homeGames, setHomeGames] = useState<GamesType[]>([])

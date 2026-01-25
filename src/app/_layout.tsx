@@ -1,26 +1,10 @@
-import Entypo from '@expo/vector-icons/Entypo'
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
-import { Tabs } from 'expo-router'
+import { Stack } from "expo-router";
+import { AuthProvider } from "./(auth)/AuthContext";
 
-export default function _layout() {
+export default function RootLayout() {
   return (
-    <Tabs>
-      <Tabs.Screen name="index"
-        options={{
-          title: 'Home',
-          headerShown: false,
-          tabBarActiveTintColor: '#e91e63',
-          tabBarIcon: () => <Entypo name="home" size={24} color="black" />,
-        }}
-      />
-      <Tabs.Screen name="homeGames"
-        options={{
-          title: 'Games',
-          headerShown: false,
-          tabBarActiveTintColor: '#e91e63',
-          tabBarIcon: () => <FontAwesome6 name="basketball" size={24} color="black" />,
-        }}
-      />
-    </Tabs>
-  )
+    <AuthProvider>
+      <Stack screenOptions={{ headerShown: false }} />
+    </AuthProvider>
+  );
 }
