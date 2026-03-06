@@ -1,13 +1,16 @@
-import { useEffect, useState } from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { useEffect, useState } from 'react';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { type GamesType } from '@/src/@types/GamesType'
-import { getHomeGames } from '@/src/api/HomeGame/getHomeGames'
-import Card from '@/src/components/Card'
-import GamesInfo from '@/src/components/GamesInfo'
-import Navbar from '@/src/components/Navbar'
+import { type GamesType } from '@/src/@types/GamesType';
+import { getHomeGames } from '@/src/api/HomeGame/getHomeGames';
+import Card from '@/src/components/Card';
+import GamesInfo from '@/src/components/GamesInfo';
+import Navbar from '@/src/components/Navbar';
+import { router } from 'expo-router';
 
 export default function IndexHomeGames() {
+  const user = { role: 'admin' };
   const [homeGames, setHomeGames] = useState<GamesType[]>([])
 
   useEffect(() => {
@@ -22,6 +25,10 @@ export default function IndexHomeGames() {
     fetchGames()
   }, [])
 
+  const addGamesModal = () => {
+    router.push("/homeGames/addGameModal")
+  }
+
   return (
     <View style={styles.page}>
       <Navbar />
@@ -29,6 +36,11 @@ export default function IndexHomeGames() {
         style={styles.header}
       >
         <Text style={styles.title}>Matchs du week-end</Text>
+        {user.role === 'admin' && (
+          <Pressable onPress={addGamesModal}>
+            <Ionicons name="add-circle-outline" size={24} color="red" />
+          </Pressable>
+        )}
       </View>
       {!homeGames ? (<Text>Loading...</Text>) : (
         <FlatList

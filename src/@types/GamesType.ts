@@ -7,3 +7,10 @@ export type GamesType = {
     name: string
   }
 }
+
+export type NewGameType = {
+  date: Date
+  hour: string
+  opponent: string
+  category: string
+}
