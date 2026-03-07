@@ -16,7 +16,7 @@ type FormData = {
   category: Category;
 };
 
-export default function AddGameForm() {
+export default function AddGameModal() {
   const {
     control,
     handleSubmit,
@@ -34,7 +34,7 @@ export default function AddGameForm() {
       category: data.category.id,
     });
 
-    router.back();
+    router.push('/homeGames');
   };
 
   const [categories, setCategories] = useState<Category[]>([]);

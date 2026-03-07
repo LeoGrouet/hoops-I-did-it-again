@@ -10,6 +10,7 @@ export async function addHomeGames(HomeGamesData: NewGameType) {
     ])
     .select()
   console.log('Adding home game with data:', HomeGamesData); // Debug log
+
   if (error) {
     console.error('Error adding home game:', error);
     return null;
