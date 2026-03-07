@@ -1,5 +1,5 @@
 export type Category = {
-  id: string;
+  id: number;
   Name: CategoryEnum;
 }
 
@@ -9,7 +9,12 @@ export enum CategoryEnum {
   U11 = "U11",
   U13 = "U13",
   U15 = "U15",
-  U17 = "U17",
-  U20 = "U20",
-  Senior = "Senior"
+  U18 = "U18",
+  SF3 = "SF3",
+  SF2 = "SF2",
+  SF1 = "SF1",
+  SH4 = "SH4",
+  SH3 = "SH3",
+  SH2 = "SH2",
+  SH1 = "SH1"
 }

@@ -1,3 +1,5 @@
+import { DateType } from "react-native-ui-datepicker"
+
 export type GamesType = {
   id: number
   date: string
@@ -9,8 +11,8 @@ export type GamesType = {
 }
 
 export type NewGameType = {
-  date: Date
+  date: DateType
   hour: string
   opponent: string
-  category: string
+  category: number
 }

@@ -1,7 +1,8 @@
-import { Category, CategoryEnum } from '@/src/@types/CategoryType';
+import { Category } from '@/src/@types/CategoryType';
 import { getCategories } from '@/src/api/Category/getCategories';
 import { addHomeGames } from '@/src/api/HomeGame/addHomeGamesOfficial';
 import { Picker } from '@react-native-picker/picker';
+import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
@@ -12,7 +13,7 @@ type FormData = {
   date: DateType;
   hour: string;
   opponent: string;
-  category: CategoryEnum;
+  category: Category;
 };
 
 export default function AddGameForm() {
@@ -23,15 +24,17 @@ export default function AddGameForm() {
   } = useForm<FormData>();
 
   const onSubmit = (data: FormData) => {
-    if (!data.date || data.date !== null || !data.hour || !data.opponent || !data.category) {
+    if (!data.date || data.date === null || !data.hour || !data.opponent || !data.category) {
       throw new Error("Tous les champs sont obligatoires");
     }
     addHomeGames({
       date: data.date,
       hour: data.hour,
       opponent: data.opponent,
-      category: data.category,
-    })
+      category: data.category.id,
+    });
+
+    router.back();
   };
 
   const [categories, setCategories] = useState<Category[]>([]);
@@ -39,7 +42,6 @@ export default function AddGameForm() {
   useEffect(() => {
     const fetchCategories = async () => {
       const data = await getCategories();
-      console.log("Fetched categories:", data); // Debug log
       setCategories(data);
     }
     fetchCategories()
@@ -50,7 +52,7 @@ export default function AddGameForm() {
   const [visible, setVisible] = useState(false);
   const [visibleCategory, setVisibleCategory] = useState(false);
   const [hourSelected, setHourSelected] = useState<string>("12:00");
-  const [categorySelected, setCategorySelected] = useState<string>("U7");
+  const [categorySelected, setCategorySelected] = useState<Category>();
 
   return (
     <View style={styles.container}>
@@ -65,7 +67,6 @@ export default function AddGameForm() {
             containerHeight={200}
             onChange={({ date }) => {
               setSelectedDate(date);
-              console.log("Selected date:", date); // Debug log
               onChange(date);
             }}
             styles={{
@@ -97,6 +98,7 @@ export default function AddGameForm() {
                 onConfirm={(time) => {
                   setVisible(false);
                   setHourSelected(time);
+                  console.log('Selected time:', time); // Debug log
                   onChange(time);
                 }}
               />
@@ -133,20 +135,20 @@ export default function AddGameForm() {
         render={({ field: { onChange, value } }) => (
           <View >
             <Button title="Catégorie" onPress={() => setVisibleCategory(true)} />
-            <TextInput style={styles.VersusInput} value={categorySelected} editable={false} />
+            <TextInput style={styles.VersusInput} value={categorySelected ? categorySelected.Name : ''} editable={false} />
             {visibleCategory && (
               <Picker
                 selectedValue={value}
                 onValueChange={(itemValue) => {
                   setCategorySelected(itemValue);
-                  onChange(itemValue);
+                  onChange(itemValue.Name);
                   setVisibleCategory(false);
                 }}
                 style={{ height: 50, width: '100%' }}
               >
                 {
                   categories.map((category) => (
-                    <Picker.Item label={category.Name} value={category.Name} key={category.id} />
+                    <Picker.Item label={category.Name} value={category} key={category.id} />
                   ))
                 }
               </Picker>

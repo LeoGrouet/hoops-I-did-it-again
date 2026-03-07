@@ -71,14 +71,16 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: 20,
+    justifyContent: 'space-between',
+    marginVertical: 10,
+    paddingHorizontal: 20,
   },
   title: {
     fontSize: 20,
+    fontWeight: 'bold',
   },
   list: {
     display: 'flex',
-    marginBottom: 60,
+    marginBottom: 40,
   },
 })
