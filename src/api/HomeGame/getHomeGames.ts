@@ -1,14 +1,19 @@
-import { type HomeGameWithCategory } from '@/src/@types/HomeGameCategory'
 
+import { HomeGameWithTeamName } from '@/src/@types/HomeGameCategory'
 import { supabase } from '../supabase'
 
-export async function getHomeGames(): Promise<HomeGameWithCategory[]> {
+export async function getHomeGames(): Promise<HomeGameWithTeamName[]> {
 
   const { data, error } = await supabase
     .from('HomeGames')
     .select(`
-    *,
-    HomeGames_category_fkey(Name)
+    id,
+    date,
+    hour,
+    opponent,
+    Teams (
+      name
+    )
   `)
 
   if (error) {
