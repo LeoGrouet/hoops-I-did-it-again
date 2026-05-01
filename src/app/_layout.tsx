@@ -1,6 +1,6 @@
-import { Entypo, FontAwesome, FontAwesome6 } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
-import { SplashScreen, Tabs } from 'expo-router';
+import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
 import AuthProvider from '../providers/AuthProvider';
 
@@ -39,29 +39,7 @@ export default function RootLayout() {
 function RootLayoutNav() {
   return (
     <AuthProvider>
-      <Tabs>
-        <Tabs.Screen name="index"
-          options={{
-            title: 'Home',
-            headerShown: false,
-            tabBarActiveTintColor: '#e91e63',
-            tabBarIcon: () => <Entypo name="home" size={24} color="black" />,
-          }}
-        />
-        <Tabs.Screen name="homeGames"
-          options={{
-            title: 'Games',
-            headerShown: false,
-            tabBarActiveTintColor: '#e91e63',
-            tabBarIcon: () => <FontAwesome6 name="basketball" size={24} color="black" />,
-          }}
-        />
-        <Tabs.Screen
-          name="(auth)"
-          options={{ headerShown: false }}
-        />
-
-      </Tabs>
+      <Stack screenOptions={{ headerShown: false }} />
     </AuthProvider>
   )
 }

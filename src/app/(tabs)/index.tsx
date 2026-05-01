@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 import Navbar from '@/src/components/Navbar';
-import { useAuth } from '../providers/AuthProvider';
+import { useAuth } from '@/src/providers/AuthProvider';
 
 export default function Index() {
   const { session } = useAuth();

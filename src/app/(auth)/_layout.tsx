@@ -32,5 +32,5 @@ export default function AuthLayout() {
   if (session) {
     return <Redirect href={'/'} />;
   }
-  return <Stack />;
+  return <Stack screenOptions={{ headerShown: false }} />
 }
