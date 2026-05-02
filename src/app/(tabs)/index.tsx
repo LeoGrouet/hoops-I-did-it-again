@@ -1,10 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 import Navbar from '@/src/components/Navbar';
-import { useAuth } from '@/src/providers/AuthProvider';
 
 export default function Index() {
-  const { session } = useAuth();
 
   return (
     <View>
@@ -16,11 +14,6 @@ export default function Index() {
         <Text>Cette application vous permet de suivre les actualités et les événements de votre club de basket préférée.</Text>
       </View>
       <View style={styles.container}>
-        {!session ? (
-          <Text>Veuillez vous connecter pour accéder à toutes les fonctionnalités de l&apos;application.</Text>
-        ) : (
-          <Text>Vous êtes connecté en tant que {session.user.email}</Text>
-        )}
       </View>
     </View>
   )
