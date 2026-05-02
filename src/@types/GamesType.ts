@@ -1,10 +1,9 @@
 export type GamesType = {
   id: number
-  date: Date
+  date: string
   hour: string
   opponent: string
-  category: string
-  HomeGames_category_fkey?: {
-    Name: string
-  } | null
+  Teams: {
+    name: string
+  }
 }

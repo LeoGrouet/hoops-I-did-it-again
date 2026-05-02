@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native';
 
-import Navbar from '@/src/components/Navbar'
+import Navbar from '@/src/components/Navbar';
 
 export default function Index() {
+
   return (
     <View>
       <Navbar />
@@ -12,6 +13,8 @@ export default function Index() {
         <Text>Bienvenue sur l&apos;application de Carpiquet Basket</Text>
         <Text>Cette application vous permet de suivre les actualités et les événements de votre club de basket préférée.</Text>
       </View>
+      <View style={styles.container}>
+      </View>
     </View>
   )
 }
@@ -19,5 +22,8 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
+    justifyContent: 'center',
+    gap: 10,
+    padding: 10,
   },
 })

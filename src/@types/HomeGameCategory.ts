@@ -1,7 +1,7 @@
 import { type GamesType } from './GamesType'
 
-export interface HomeGameWithCategory extends GamesType {
-  HomeGames_category_fkey?: {
-    Name: string
+export interface HomeGameWithTeamName extends GamesType {
+  HomeGames_teamId_fkey?: {
+    name: string
   }
 }

@@ -10,7 +10,7 @@ export default function GamesInfo(item: GamesType) {
   const formatted = dayjs(item.date).locale('fr').format('D MMMM YYYY')
 
   return (
-    <TouchableOpacity style={styles.container} onPress={() => router.push(`/homeGames/HomeGamesScheduledInfo?id=${item.id}`)}>
+    <TouchableOpacity style={styles.container} onPress={() => router.push(`/(tabs)/Games/HomeGamesScheduledInfo?id=${item.id}`)}>
       <View style={styles.versus}>
         <Image
           style={{ width: 50, height: 50 }}
@@ -22,7 +22,7 @@ export default function GamesInfo(item: GamesType) {
       <View style={styles.info}>
         <Text>{formatted}</Text>
         <Text>{item.hour}Heure</Text>
-        <Text>{item.category}</Text>
+        <Text>{item.Teams?.name || 'Unknown Team'}</Text>
       </View>
     </TouchableOpacity>
   )

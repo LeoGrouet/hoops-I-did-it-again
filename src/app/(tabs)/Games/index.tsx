@@ -39,10 +39,10 @@ export default function IndexHomeGames() {
             <Card>
               <GamesInfo
                 id={game.id}
-                category={game.HomeGames_category_fkey?.Name || game.category}
                 date={game.date}
                 hour={game.hour}
                 opponent={game.opponent}
+                Teams={game.Teams || { name: 'Unknown Team' }}
               />
             </Card>
           )}
