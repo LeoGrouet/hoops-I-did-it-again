@@ -7,10 +7,11 @@ import { getHomeGames } from '@/src/api/HomeGame/getHomeGames';
 import Card from '@/src/components/Card';
 import GamesInfo from '@/src/components/GamesInfo';
 import Navbar from '@/src/components/Navbar';
+import { useAuth } from '@/src/providers/AuthProvider';
 import { router } from 'expo-router';
 
 export default function IndexHomeGames() {
-  const user = { role: 'admin' };
+  const user = useAuth().session?.user
   const [homeGames, setHomeGames] = useState<GamesType[]>([])
 
   useEffect(() => {
@@ -26,7 +27,7 @@ export default function IndexHomeGames() {
   }, [])
 
   const addGamesModal = () => {
-    router.push("/homeGames/addGameModal")
+    router.push("/(tabs)/Games/addGameModal")
   }
 
   return (
@@ -36,7 +37,7 @@ export default function IndexHomeGames() {
         style={styles.header}
       >
         <Text style={styles.title}>Matchs du week-end</Text>
-        {user.role === 'admin' && (
+        {user?.role === 'admin' && (
           <Pressable onPress={addGamesModal}>
             <Ionicons name="add-circle-outline" size={24} color="red" />
           </Pressable>
