@@ -7,7 +7,7 @@ import { Redirect, Stack } from 'expo-router';
 export default function AuthLayout() {
   const { session } = useAuth();
 
-  const url = Linking.useURL();
+  const url = Linking.useLinkingURL();
 
   const createSessionFromUrl = async (url: string) => {
     const { params, errorCode } = QueryParams.getQueryParams(url);

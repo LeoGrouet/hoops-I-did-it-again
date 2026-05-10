@@ -1,3 +1,4 @@
+import colors from '@/src/assets/theme/colors';
 import { useAuth } from '@/src/providers/AuthProvider';
 import { Entypo, FontAwesome, FontAwesome6 } from '@expo/vector-icons';
 import { Redirect, Tabs } from 'expo-router';
@@ -10,33 +11,36 @@ export default function tabsLayout() {
   }
 
   return (
-    <Tabs>
+    <Tabs screenOptions={{
+      tabBarStyle: {
+        height: 60,
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
+    }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
           headerShown: false,
-          tabBarActiveTintColor: '#e91e63',
-          tabBarIcon: () => <Entypo name="home" size={24} color="black" />,
+          tabBarActiveTintColor: colors.primary,
+          tabBarIcon: ({ color, size }) => <Entypo name="home" size={size} color={color} />,
         }}
       />
 
       <Tabs.Screen
         name="Games"
         options={{
-          title: 'Games',
           headerShown: false,
-          tabBarActiveTintColor: '#e91e63',
-          tabBarIcon: () => <FontAwesome6 name="basketball" size={24} color="black" />,
+          tabBarActiveTintColor: colors.primary,
+          tabBarIcon: ({ color, size }) => <FontAwesome6 name="basketball" size={size} color={color} />,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
           headerShown: false,
-          tabBarActiveTintColor: '#e91e63',
-          tabBarIcon: () => <FontAwesome name="user" size={24} color="black" />,
+          tabBarActiveTintColor: colors.primary,
+          tabBarIcon: ({ color, size }) => <FontAwesome name="user" size={size} color={color} />,
         }}
       />
     </Tabs>
