@@ -1,10 +1,12 @@
 import { type OfficialType } from '@/src/@types/OfficialType'
 import { getHomeGameOfficial } from '@/src/api/HomeGame/getHomeGameOfficial'
-import { AntDesign } from '@expo/vector-icons'
+import colors from '@/src/assets/theme/colors'
+import OfficialTitle from '@/src/components/atoms/official/title'
+import { AntDesign, Ionicons } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Link, router, useLocalSearchParams } from 'expo-router'
 import { useEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 export default function HomeGamesScheduledInfo() {
   const { id } = useLocalSearchParams<{ id?: string }>()
@@ -42,7 +44,7 @@ export default function HomeGamesScheduledInfo() {
         style={styles.background}
       >
         {isPresented && <Link href="../"><AntDesign name="line" size={24} color="black" /></Link>}
-        <Text style={styles.title}>Arbitres:</Text>
+        <OfficialTitle title="Arbitres:" />
         {
           OfficialReferee && OfficialReferee.length > 0 ?
             (OfficialReferee?.map((official, index) => (
@@ -50,10 +52,15 @@ export default function HomeGamesScheduledInfo() {
                 {official?.User?.Firstname} {official.User?.Lastname} {official.User?.LicenceNb}
               </Text>
             )))
-            : <Text style={styles.official}>Aucun arbitre assigné</Text>
+            : <View style={styles.official}>
+              <Text>Aucun arbitre assigné</Text>
+              <Pressable onPress={() => console.log("Ajouter un arbitre")}>
+                <Ionicons name="add-circle-outline" size={24} color={colors.white} />
+              </Pressable>
+            </View>
         }
 
-        <Text style={styles.title}>Table de marque:</Text>
+        <OfficialTitle title="Table de marque:" />
         {
           OfficialOtm && OfficialOtm.length > 0 ?
             (OfficialOtm?.map((official, index) => (
@@ -64,7 +71,7 @@ export default function HomeGamesScheduledInfo() {
             : <Text style={styles.official}>Aucun officiel de table assigné</Text>
         }
 
-        <Text style={styles.title}>Surveillant de salle:</Text>
+        <OfficialTitle title="Surveillant de salle:" />
         {
           OfficialRoom && OfficialRoom.length > 0 ?
             (OfficialRoom?.map((official, index) => (
@@ -84,15 +91,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  title: {
-    alignSelf: 'flex-start',
-    fontSize: 20,
-    fontWeight: 'bold',
-    borderRadius: 20,
-    margin: 15,
-    color: 'white',
-  },
   official: {
+    flexDirection: 'row',
+    alignItems: 'center',
     alignSelf: 'flex-start',
     fontSize: 14,
     marginLeft: 15,
