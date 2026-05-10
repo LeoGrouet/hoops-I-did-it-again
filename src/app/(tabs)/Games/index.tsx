@@ -1,9 +1,11 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useEffect, useState } from 'react';
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Suspense, useEffect, useState } from 'react';
+import { FlatList, ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { type GamesType } from '@/src/@types/GamesType';
 import { getHomeGames } from '@/src/api/HomeGame/getHomeGames';
+import { getUserProfile } from '@/src/api/Profile/getUserProfile';
+import colors from '@/src/assets/theme/colors';
 import Card from '@/src/components/Card';
 import GamesInfo from '@/src/components/GamesInfo';
 import Navbar from '@/src/components/Navbar';
@@ -13,6 +15,7 @@ import { router } from 'expo-router';
 export default function IndexHomeGames() {
   const user = useAuth().session?.user
   const [homeGames, setHomeGames] = useState<GamesType[]>([])
+  const [userInfo, setUserInfo] = useState<any>(null)
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -24,44 +27,65 @@ export default function IndexHomeGames() {
     }
 
     fetchGames()
+  }, [homeGames])
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      if (user) {
+        try {
+          const data = await getUserProfile(user.id)
+          setUserInfo(data)
+        } catch (error) {
+          console.error('Error fetching user profile:', error)
+        }
+      }
+    }
+    fetchUserInfo()
   }, [])
+
 
   const addGamesModal = () => {
     router.push("/(tabs)/Games/addGameModal")
   }
 
   return (
-    <View style={styles.page}>
-      <Navbar />
-      <View
-        style={styles.header}
-      >
-        <Text style={styles.title}>Matchs du week-end</Text>
-        {user?.role === 'admin' && (
-          <Pressable onPress={addGamesModal}>
-            <Ionicons name="add-circle-outline" size={24} color="red" />
-          </Pressable>
-        )}
-      </View>
-      {!homeGames ? (<Text>Loading...</Text>) : (
-        <FlatList
-          style={styles.list}
-          data={homeGames}
-          keyExtractor={game => game.id.toString()}
-          renderItem={({ item: game }) => (
-            <Card>
-              <GamesInfo
-                id={game.id}
-                date={game.date}
-                hour={game.hour}
-                opponent={game.opponent}
-                Teams={game.Teams || { name: 'Unknown Team' }}
-              />
-            </Card>
+    <ImageBackground
+      source={require('../../../assets/images/carpiquetlogo.png')}
+      resizeMode="center"
+    >
+      <View style={styles.page}>
+        <Navbar />
+        <View
+          style={styles.header}
+        >
+          <Text style={styles.title}>Matchs du week-end</Text>
+          {userInfo?.role === 'Admin' && (
+            <Pressable onPress={addGamesModal}>
+              <Ionicons name="add-circle-outline" size={24} color={colors.primary} />
+            </Pressable>
           )}
-        />
-      )}
-    </View>
+        </View>
+
+        <Suspense fallback={<Text>Loading...</Text>}>
+          <FlatList
+            style={styles.list}
+            data={homeGames}
+            keyExtractor={game => game.id.toString()}
+            renderItem={({ item: game }) => (
+              <Card>
+                <GamesInfo
+                  id={game.id}
+                  date={game.date}
+                  hour={game.hour}
+                  opponent={game.opponent}
+                  Teams={game.Teams || { name: 'Unknown Team' }}
+                />
+              </Card>
+            )}
+          />
+        </Suspense>
+      </View >
+    </ImageBackground>
   )
 }
 
@@ -69,6 +93,7 @@ const styles = StyleSheet.create({
   page: {
     display: 'flex',
     justifyContent: 'center',
+    marginBottom: 130,
   },
   header: {
     flexDirection: 'row',

@@ -1,5 +1,5 @@
 
-import { HomeGameWithTeamName } from '@/src/@types/HomeGameCategory'
+import { HomeGameWithTeamName } from '@/src/@types/HomeGameWithTeamName'
 import { supabase } from '../supabase'
 
 export async function getHomeGames(): Promise<HomeGameWithTeamName[]> {

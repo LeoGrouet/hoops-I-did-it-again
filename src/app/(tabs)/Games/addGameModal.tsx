@@ -1,6 +1,6 @@
-import { Category } from '@/src/@types/CategoryType';
-import { getCategories } from '@/src/api/Category/getCategories';
+import { TeamType } from '@/src/@types/TeamType';
 import { addHomeGames } from '@/src/api/HomeGame/addHomeGamesOfficial';
+import { getTeams } from '@/src/api/Teams/getTeams';
 import { Picker } from '@react-native-picker/picker';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
@@ -13,7 +13,7 @@ type FormData = {
   date: DateType;
   hour: string;
   opponent: string;
-  category: Category;
+  teamId: number;
 };
 
 export default function AddGameModal() {
@@ -24,35 +24,40 @@ export default function AddGameModal() {
   } = useForm<FormData>();
 
   const onSubmit = (data: FormData) => {
-    if (!data.date || data.date === null || !data.hour || !data.opponent || !data.category) {
+    if (!data.date || data.date === null || !data.hour || !data.opponent || !data.teamId) {
       throw new Error("Tous les champs sont obligatoires");
     }
-    addHomeGames({
-      date: data.date,
-      hour: data.hour,
-      opponent: data.opponent,
-      category: data.category.id,
-    });
+    try {
+      addHomeGames({
+        date: data.date,
+        hour: data.hour,
+        opponent: data.opponent,
+        teamId: data.teamId,
+      });
 
-    router.push('/homeGames');
+      router.back();
+      router.replace('/Games');
+    } catch (error) {
+      throw new Error("Erreur lors de l'ajout du match: " + error);
+    }
   };
 
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [teams, setTeams] = useState<TeamType[]>([]);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      const data = await getCategories();
-      setCategories(data);
+    const fetchTeams = async () => {
+      const data = await getTeams();
+      setTeams(data);
     }
-    fetchCategories()
+    fetchTeams()
   }, [])
 
   const defaultStyles = useDefaultStyles();
   const [selectedDate, setSelectedDate] = useState<DateType>();
   const [visible, setVisible] = useState(false);
-  const [visibleCategory, setVisibleCategory] = useState(false);
+  const [visibleTeam, setVisibleTeam] = useState(false);
   const [hourSelected, setHourSelected] = useState<string>("12:00");
-  const [categorySelected, setCategorySelected] = useState<Category>();
+  const [teamSelected, setTeamSelected] = useState<TeamType | null>(null);
 
   return (
     <View style={styles.container}>
@@ -98,7 +103,6 @@ export default function AddGameModal() {
                 onConfirm={(time) => {
                   setVisible(false);
                   setHourSelected(time);
-                  console.log('Selected time:', time); // Debug log
                   onChange(time);
                 }}
               />
@@ -130,25 +134,30 @@ export default function AddGameModal() {
       {/* Champ Catégorie (Picker) */}
       <Controller
         control={control}
-        name="category"
-        rules={{ required: 'Catégorie obligatoire' }}
+        name="teamId"
+        rules={{ required: 'Équipe obligatoire' }}
         render={({ field: { onChange, value } }) => (
           <View >
-            <Button title="Catégorie" onPress={() => setVisibleCategory(true)} />
-            <TextInput style={styles.VersusInput} value={categorySelected ? categorySelected.Name : ''} editable={false} />
-            {visibleCategory && (
-              <Picker
+            <Button title="Équipe" onPress={() => setVisibleTeam(true)} />
+            <TextInput
+              style={styles.VersusInput}
+              placeholder='Choisissez une équipe'
+              value={teamSelected ? teamSelected.name : ''}
+              editable={false} />
+            {visibleTeam && (
+              <Picker<number>
                 selectedValue={value}
-                onValueChange={(itemValue) => {
-                  setCategorySelected(itemValue);
-                  onChange(itemValue.Name);
-                  setVisibleCategory(false);
+                onValueChange={(itemValue: number) => {
+                  console.log('Selected team id:', itemValue); // Debug log
+                  setTeamSelected(teams.find(t => t.id === itemValue) ?? null);
+                  onChange(itemValue);
+                  setVisibleTeam(false);
                 }}
                 style={{ height: 50, width: '100%' }}
               >
                 {
-                  categories.map((category) => (
-                    <Picker.Item label={category.Name} value={category} key={category.id} />
+                  teams.map((team) => (
+                    <Picker.Item label={team.name} value={team.id} key={team.id} />
                   ))
                 }
               </Picker>
@@ -157,7 +166,7 @@ export default function AddGameModal() {
         )
         }
       />
-      {errors.category && <Text style={styles.error}>{errors.category.message}</Text>}
+      {errors.teamId && <Text style={styles.error}>{errors.teamId.message}</Text>}
 
       <Button title="Ajouter" onPress={handleSubmit(onSubmit)} />
     </View >

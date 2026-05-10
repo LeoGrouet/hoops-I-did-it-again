@@ -6,7 +6,7 @@ export async function addHomeGames(HomeGamesData: NewGameType) {
   const { data, error } = await supabase
     .from('HomeGames')
     .insert([
-      { date: HomeGamesData.date, category: HomeGamesData.category, opponent: HomeGamesData.opponent, hour: HomeGamesData.hour },
+      { date: HomeGamesData.date, teamId: HomeGamesData.teamId, opponent: HomeGamesData.opponent, hour: HomeGamesData.hour },
     ])
     .select()
   console.log('Adding home game with data:', HomeGamesData); // Debug log

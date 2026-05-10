@@ -26,6 +26,14 @@ export default function tabsLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="addGameModal"
+        options={{
+          title: 'AddGameModal',
+          presentation: 'modal',
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }

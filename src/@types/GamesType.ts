@@ -14,5 +14,5 @@ export type NewGameType = {
   date: DateType
   hour: string
   opponent: string
-  category: number
+  teamId: number
 }
