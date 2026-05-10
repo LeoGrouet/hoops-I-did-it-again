@@ -1,8 +1,3 @@
-export type Category = {
-  id: number;
-  Name: CategoryEnum;
-}
-
 export enum CategoryEnum {
   U7 = "U7",
   U9 = "U9",
