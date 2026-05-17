@@ -1,5 +1,7 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import dayjs from 'dayjs';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FlatList, ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { type GamesType } from '@/src/@types/GamesType';
@@ -12,21 +14,78 @@ import Card from '@/src/components/Card';
 import GamesInfo from '@/src/components/GamesInfo';
 import Navbar from '@/src/components/Navbar';
 import { useAuth } from '@/src/providers/AuthProvider';
+import { isSameCalendarDay, toDateKey } from '@/src/utils/dates';
+import { consumeGamesScreenIntent } from '@/src/utils/gamesScreenIntent';
 import { router } from 'expo-router';
 
 export default function IndexHomeGames() {
   const user = useAuth().session?.user
   const [homeGames, setHomeGames] = useState<GamesType[]>([])
   const [userInfo, setUserInfo] = useState<UserType | null>(null)
+  const [selectedDate, setSelectedDate] = useState(() => new Date())
+  const didAutoSelectDate = useRef(false)
+
+  const loadGames = useCallback(async () => {
+    const data = await getHomeGames()
+    setHomeGames(data)
+  }, [])
+
+  useFocusEffect(
+    useCallback(() => {
+      const intent = consumeGamesScreenIntent()
+
+      if (intent?.createdGame) {
+        setHomeGames(previous => {
+          if (previous.some(game => game.id === intent.createdGame!.id)) {
+            return previous
+          }
+          return [...previous, intent.createdGame!].sort(
+            (a, b) =>
+              dayjs(a.date).valueOf() - dayjs(b.date).valueOf()
+              || a.hour.localeCompare(b.hour),
+          )
+        })
+      }
+
+      if (intent?.selectDateKey) {
+        setSelectedDate(dayjs(intent.selectDateKey).toDate())
+        didAutoSelectDate.current = true
+      }
+
+      loadGames()
+    }, [loadGames]),
+  )
 
   useEffect(() => {
-    const fetchGames = async () => {
-      const data = await getHomeGames()
-      setHomeGames(data)
+    if (didAutoSelectDate.current || homeGames.length === 0) return
+
+    const todayHasGames = homeGames.some(game =>
+      isSameCalendarDay(game.date, new Date()),
+    )
+    if (todayHasGames) {
+      didAutoSelectDate.current = true
+      return
     }
 
-    fetchGames()
-  }, [])
+    const nextGame = [...homeGames]
+      .sort((a, b) => dayjs(a.date).valueOf() - dayjs(b.date).valueOf())
+      .find(game => !dayjs(game.date).isBefore(dayjs(), 'day'))
+
+    if (nextGame) {
+      setSelectedDate(dayjs(nextGame.date).toDate())
+    }
+    didAutoSelectDate.current = true
+  }, [homeGames])
+
+  const markedDateKeys = useMemo(
+    () => [...new Set(homeGames.map(game => toDateKey(game.date)))],
+    [homeGames],
+  )
+
+  const gamesForSelectedDate = useMemo(
+    () => homeGames.filter(game => isSameCalendarDay(game.date, selectedDate)),
+    [homeGames, selectedDate],
+  )
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -56,10 +115,12 @@ export default function IndexHomeGames() {
     >
       <View style={styles.page}>
         <Navbar />
-        <View
-          style={styles.header}
-        >
-          <CalendarScrollBar />
+        <CalendarScrollBar
+          selectedDate={selectedDate}
+          onSelectDate={setSelectedDate}
+          markedDateKeys={markedDateKeys}
+        />
+        <View style={styles.header}>
           <Text style={styles.title}>Matchs du week-end</Text>
           {userInfo?.role === 'Admin' && (
             <Pressable onPress={addGamesModal}>
@@ -70,8 +131,11 @@ export default function IndexHomeGames() {
 
         <FlatList
           style={styles.list}
-          data={homeGames}
+          data={gamesForSelectedDate}
           keyExtractor={game => game.id.toString()}
+          ListEmptyComponent={
+            <Text style={styles.empty}>Aucun match pour cette date.</Text>
+          }
           renderItem={({ item: game }) => (
             <Card>
               <GamesInfo
@@ -108,5 +172,11 @@ const styles = StyleSheet.create({
   list: {
     display: 'flex',
     marginBottom: 40,
+  },
+  empty: {
+    textAlign: 'center',
+    marginTop: 24,
+    paddingHorizontal: 20,
+    color: '#666',
   },
 })
