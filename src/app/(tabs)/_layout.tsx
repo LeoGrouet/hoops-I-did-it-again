@@ -3,7 +3,7 @@ import { useAuth } from '@/src/providers/AuthProvider';
 import { Entypo, FontAwesome, FontAwesome6 } from '@expo/vector-icons';
 import { Redirect, Tabs } from 'expo-router';
 
-export default function tabsLayout() {
+export default function TabsLayout() {
   const { session } = useAuth()
 
   if (!session) {

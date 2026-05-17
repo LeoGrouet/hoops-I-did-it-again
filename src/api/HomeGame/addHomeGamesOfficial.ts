@@ -9,7 +9,6 @@ export async function addHomeGames(HomeGamesData: NewGameType) {
       { date: HomeGamesData.date, teamId: HomeGamesData.teamId, opponent: HomeGamesData.opponent, hour: HomeGamesData.hour },
     ])
     .select()
-  console.log('Adding home game with data:', HomeGamesData); // Debug log
 
   if (error) {
     console.error('Error adding home game:', error);

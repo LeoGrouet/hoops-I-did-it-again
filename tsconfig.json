@@ -2,10 +2,12 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
+    "skipLibCheck": true,
     "baseUrl": ".",
     "jsx": "react-jsx",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "react-native-flexi-time-selector": ["./src/shims/react-native-flexi-time-selector.ts"]
     }
   },
   "include": [

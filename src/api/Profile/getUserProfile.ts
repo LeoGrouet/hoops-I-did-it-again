@@ -12,6 +12,5 @@ export async function getUserProfile(userUid: string): Promise<UserType> {
     console.error('Erreur Supabase:', error)
     throw error
   }
-  console.log('Données récupérées:', data[0])
-  return data[0] ?? {} as UserType
+  return (data?.[0] ?? {}) as UserType
 }

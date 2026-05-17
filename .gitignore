@@ -43,3 +43,8 @@ app-example
 /ios
 /android
 node_modules
+
+# Expo
+.expo
+dist/
+web-build/

@@ -1,3 +1,4 @@
+import { type UserType } from "@/src/@types/UserType"
 import { getUserProfile } from "@/src/api/Profile/getUserProfile"
 import Navbar from "@/src/components/Navbar"
 import { useAuth } from "@/src/providers/AuthProvider"
@@ -6,21 +7,23 @@ import { StyleSheet, Text, View } from "react-native"
 
 export default function Profile() {
 
-  const currentUserUid = useAuth().session?.user.id
-  console.log('Current User UID:', currentUserUid)
+  const currentUserUid = useAuth().session?.user?.id
 
-  const [profile, setProfile] = useState<any>(null)
+  const [profile, setProfile] = useState<UserType | null>(null)
 
   useEffect(() => {
-    getUserProfile(currentUserUid!)
+    if (!currentUserUid) {
+      setProfile(null)
+      return
+    }
+    getUserProfile(currentUserUid)
       .then((profile) => {
         setProfile(profile)
       })
       .catch(error => {
         console.error('Error fetching user profile:', error)
       })
-  }, [])
-  console.log('Profile data:', profile?.email)
+  }, [currentUserUid])
   return (
     <View style={styles.container}>
       <Navbar />

@@ -23,23 +23,21 @@ export default function AddGameModal() {
     formState: { errors },
   } = useForm<FormData>();
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     if (!data.date || data.date === null || !data.hour || !data.opponent || !data.teamId) {
       throw new Error("Tous les champs sont obligatoires");
     }
-    try {
-      addHomeGames({
-        date: data.date,
-        hour: data.hour,
-        opponent: data.opponent,
-        teamId: data.teamId,
-      });
-
-      router.back();
-      router.replace('/Games');
-    } catch (error) {
-      throw new Error("Erreur lors de l'ajout du match: " + error);
+    const result = await addHomeGames({
+      date: data.date,
+      hour: data.hour,
+      opponent: data.opponent,
+      teamId: data.teamId,
+    });
+    if (result === null) {
+      throw new Error("Erreur lors de l'ajout du match");
     }
+    router.back();
+    router.replace('/Games');
   };
 
   const [teams, setTeams] = useState<TeamType[]>([]);
@@ -148,7 +146,6 @@ export default function AddGameModal() {
               <Picker<number>
                 selectedValue={value}
                 onValueChange={(itemValue: number) => {
-                  console.log('Selected team id:', itemValue); // Debug log
                   setTeamSelected(teams.find(t => t.id === itemValue) ?? null);
                   onChange(itemValue);
                   setVisibleTeam(false);
@@ -191,37 +188,5 @@ const styles = StyleSheet.create({
   error: {
     color: 'red',
     marginBottom: 10,
-  },
-});
-
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
-    fontSize: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 4,
-    color: 'black',
-    paddingRight: 30, // Pour laisser de la place à l'icône de dropdown
-    backgroundColor: 'white',
-    height: 50,
-    width: '100%',
-  },
-  inputAndroid: {
-    fontSize: 16,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 8,
-    color: 'black',
-    paddingRight: 30,
-    backgroundColor: 'white',
-    height: 50,
-    width: '100%',
-  },
-  placeholder: {
-    color: 'gray',
   },
 });

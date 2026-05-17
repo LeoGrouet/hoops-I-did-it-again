@@ -7,7 +7,6 @@
     "icon": "./src/assets/images/icon.png",
     "scheme": "hoops-esc",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.anonymous.hoopsesc"
@@ -19,7 +18,6 @@
         "backgroundImage": "./src/assets/images/android-icon-background.png",
         "monochromeImage": "./src/assets/images/android-icon-monochrome.png"
       },
-      "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.anonymous.hoopsesc"
     },
@@ -41,7 +39,10 @@
             "backgroundColor": "#000000"
           }
         }
-      ]
+      ],
+      "expo-web-browser",
+      "expo-font",
+      "expo-image"
     ],
     "experiments": {
       "typedRoutes": true,
