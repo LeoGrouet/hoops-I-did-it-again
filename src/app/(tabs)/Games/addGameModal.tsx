@@ -1,14 +1,28 @@
+import 'dayjs/locale/fr';
+
 import { TeamType } from '@/src/@types/TeamType';
 import { addHomeGames } from '@/src/api/HomeGame/addHomeGamesOfficial';
 import { getTeams } from '@/src/api/Teams/getTeams';
+import colors from '@/src/assets/theme/colors';
+import { toDateKey } from '@/src/utils/dates';
+import { setGamesScreenIntent } from '@/src/utils/gamesScreenIntent';
 import { Picker } from '@react-native-picker/picker';
+import dayjs from 'dayjs';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  Alert,
+  Button,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import { TimePicker } from 'react-native-flexi-time-selector';
 import DateTimePicker, { DateType, useDefaultStyles } from 'react-native-ui-datepicker';
-// Définissez le type FormData
+
 type FormData = {
   date: DateType;
   hour: string;
@@ -16,51 +30,79 @@ type FormData = {
   teamId: number;
 };
 
+const defaultFormDate = new Date();
+
 export default function AddGameModal() {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    defaultValues: {
+      date: defaultFormDate,
+      hour: '12:00',
+      opponent: '',
+    },
+  });
 
-  const onSubmit = (data: FormData) => {
-    if (!data.date || data.date === null || !data.hour || !data.opponent || !data.teamId) {
-      throw new Error("Tous les champs sont obligatoires");
+  const [teams, setTeams] = useState<TeamType[]>([]);
+  const [pickerDate, setPickerDate] = useState<DateType>(defaultFormDate);
+  const [visible, setVisible] = useState(false);
+  const [visibleTeam, setVisibleTeam] = useState(false);
+  const [hourSelected, setHourSelected] = useState('12:00');
+  const [teamSelected, setTeamSelected] = useState<TeamType | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const defaultStyles = useDefaultStyles();
+
+  useEffect(() => {
+    const fetchTeams = async () => {
+      const data = await getTeams();
+      setTeams(data);
+    };
+    fetchTeams();
+  }, []);
+
+  const onSubmit = async (data: FormData) => {
+    if (!data.date || !data.hour || !data.opponent || !data.teamId) {
+      Alert.alert('Champs manquants', 'Tous les champs sont obligatoires.');
+      return;
     }
+
+    setIsSubmitting(true);
     try {
-      addHomeGames({
+      const created = await addHomeGames({
         date: data.date,
         hour: data.hour,
         opponent: data.opponent,
         teamId: data.teamId,
       });
 
+      if (!created) {
+        Alert.alert('Erreur', "Impossible d'ajouter le match.");
+        return;
+      }
+
+      setGamesScreenIntent({
+        selectDateKey: toDateKey(created.date),
+        createdGame: created,
+      });
       router.back();
-      router.replace('/Games');
     } catch (error) {
-      throw new Error("Erreur lors de l'ajout du match: " + error);
+      console.error('Error adding home game:', error);
+      Alert.alert('Erreur', "Une erreur est survenue lors de l'ajout du match.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const [teams, setTeams] = useState<TeamType[]>([]);
-
-  useEffect(() => {
-    const fetchTeams = async () => {
-      const data = await getTeams();
-      setTeams(data);
-    }
-    fetchTeams()
-  }, [])
-
-  const defaultStyles = useDefaultStyles();
-  const [selectedDate, setSelectedDate] = useState<DateType>();
-  const [visible, setVisible] = useState(false);
-  const [visibleTeam, setVisibleTeam] = useState(false);
-  const [hourSelected, setHourSelected] = useState<string>("12:00");
-  const [teamSelected, setTeamSelected] = useState<TeamType | null>(null);
-
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.sectionTitle}>Date du match</Text>
+      <Text style={styles.selectedDateLabel}>
+        {dayjs(pickerDate).locale('fr').format('dddd D MMMM YYYY')}
+      </Text>
+
       <Controller
         control={control}
         name="date"
@@ -68,22 +110,23 @@ export default function AddGameModal() {
         render={({ field: { onChange } }) => (
           <DateTimePicker
             mode="single"
-            date={selectedDate}
-            containerHeight={200}
+            date={pickerDate}
+            containerHeight={280}
             onChange={({ date }) => {
-              setSelectedDate(date);
+              if (!date) return;
+              setPickerDate(date);
               onChange(date);
             }}
             styles={{
               ...defaultStyles,
-              today: { borderColor: 'red', borderWidth: 1 },
-              selected: { backgroundColor: 'red' },
-              selected_label: { color: 'white' },
+              today: { borderColor: colors.primary, borderWidth: 1 },
+              selected: { backgroundColor: colors.primary },
+              selected_label: { color: colors.white },
             }}
           />
         )}
       />
-      {errors.date && <Text style={styles.error}>{errors.date.message}</Text>}
+      {errors.date ? <Text style={styles.error}>{errors.date.message}</Text> : null}
 
       <Controller
         control={control}
@@ -91,35 +134,34 @@ export default function AddGameModal() {
         rules={{ required: 'Heure obligatoire' }}
         render={({ field: { onChange } }) => (
           <View>
-            <Button title="Heure du match" onPress={() => setVisible(true)} />
-            <TextInput style={styles.VersusInput} value={hourSelected} editable={false} />
-            {visible && (
+            <Text style={styles.fieldLabel}>Heure du match</Text>
+            <TextInput style={styles.VersusInput} value={hourSelected} editable={false} onPressIn={() => setVisible(true)} />
+            {visible ? (
               <TimePicker
                 isVisible={visible}
                 title="Heure du match"
                 use12Hour={false}
                 minuteInterval={1}
                 onClose={() => setVisible(false)}
-                onConfirm={(time) => {
+                onConfirm={time => {
                   setVisible(false);
                   setHourSelected(time);
                   onChange(time);
                 }}
               />
-            )}
+            ) : null}
           </View>
         )}
       />
-      {errors.hour && <Text style={styles.error}>{errors.hour.message}</Text>}
+      {errors.hour ? <Text style={styles.error}>{errors.hour.message}</Text> : null}
 
-      {/* Champ Adversaire */}
       <Controller
         control={control}
         name="opponent"
         rules={{ required: 'Adversaire obligatoire' }}
         render={({ field: { onChange, value } }) => (
           <View>
-            <Button title="Adversaire" />
+            <Text style={styles.fieldLabel}>Adversaire</Text>
             <TextInput
               style={styles.VersusInput}
               placeholder="Adversaire"
@@ -129,55 +171,73 @@ export default function AddGameModal() {
           </View>
         )}
       />
-      {errors.opponent && <Text style={styles.error}>{errors.opponent.message}</Text>}
+      {errors.opponent ? <Text style={styles.error}>{errors.opponent.message}</Text> : null}
 
-      {/* Champ Catégorie (Picker) */}
       <Controller
         control={control}
         name="teamId"
         rules={{ required: 'Équipe obligatoire' }}
         render={({ field: { onChange, value } }) => (
-          <View >
-            <Button title="Équipe" onPress={() => setVisibleTeam(true)} />
+          <View>
+            <Text style={styles.fieldLabel}>Équipe</Text>
             <TextInput
               style={styles.VersusInput}
-              placeholder='Choisissez une équipe'
+              onPress={() => setVisibleTeam(true)}
+              placeholder="Choisissez une équipe"
               value={teamSelected ? teamSelected.name : ''}
-              editable={false} />
-            {visibleTeam && (
+              editable={false}
+            />
+            {visibleTeam ? (
               <Picker<number>
                 selectedValue={value}
                 onValueChange={(itemValue: number) => {
-                  console.log('Selected team id:', itemValue); // Debug log
-                  setTeamSelected(teams.find(t => t.id === itemValue) ?? null);
+                  setTeamSelected(teams.find(team => team.id === itemValue) ?? null);
                   onChange(itemValue);
                   setVisibleTeam(false);
                 }}
-                style={{ height: 50, width: '100%' }}
+                style={styles.picker}
               >
-                {
-                  teams.map((team) => (
-                    <Picker.Item label={team.name} value={team.id} key={team.id} />
-                  ))
-                }
+                {teams.map(team => (
+                  <Picker.Item label={team.name} value={team.id} key={team.id} />
+                ))}
               </Picker>
-            )}
+            ) : null}
           </View>
-        )
-        }
+        )}
       />
-      {errors.teamId && <Text style={styles.error}>{errors.teamId.message}</Text>}
+      {errors.teamId ? <Text style={styles.error}>{errors.teamId.message}</Text> : null}
 
-      <Button title="Ajouter" onPress={handleSubmit(onSubmit)} />
-    </View >
+      <Button
+        title={isSubmitting ? 'Ajout en cours…' : 'Ajouter'}
+        onPress={handleSubmit(onSubmit)}
+        disabled={isSubmitting}
+        color={colors.primary}
+      />
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     width: '100%',
     padding: 20,
+    paddingBottom: 40,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    marginBottom: 4,
+  },
+  selectedDateLabel: {
+    fontSize: 15,
+    color: '#444',
+    marginBottom: 12,
+    textTransform: 'capitalize',
+  },
+  fieldLabel: {
+    marginBottom: 6,
+    fontWeight: '600',
   },
   VersusInput: {
     height: 40,
@@ -188,40 +248,12 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
   },
+  picker: {
+    height: 50,
+    width: '100%',
+  },
   error: {
     color: 'red',
     marginBottom: 10,
-  },
-});
-
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
-    fontSize: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 4,
-    color: 'black',
-    paddingRight: 30, // Pour laisser de la place à l'icône de dropdown
-    backgroundColor: 'white',
-    height: 50,
-    width: '100%',
-  },
-  inputAndroid: {
-    fontSize: 16,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 8,
-    color: 'black',
-    paddingRight: 30,
-    backgroundColor: 'white',
-    height: 50,
-    width: '100%',
-  },
-  placeholder: {
-    color: 'gray',
   },
 });

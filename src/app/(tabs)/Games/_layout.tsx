@@ -1,7 +1,7 @@
 import { useAuth } from '@/src/providers/AuthProvider';
 import { Redirect, Stack } from 'expo-router';
 
-export default function tabsLayout() {
+export default function GamesStackLayout() {
   const { session } = useAuth()
 
   if (!session) {

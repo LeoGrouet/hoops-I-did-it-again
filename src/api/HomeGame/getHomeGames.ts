@@ -1,6 +1,6 @@
-
 import { HomeGameWithTeamName } from '@/src/@types/HomeGameWithTeamName'
 import { supabase } from '../supabase'
+import { type HomeGameRow, mapHomeGameRow } from './mapHomeGameRow'
 
 export async function getHomeGames(): Promise<HomeGameWithTeamName[]> {
 
@@ -21,5 +21,6 @@ export async function getHomeGames(): Promise<HomeGameWithTeamName[]> {
     return []
   }
 
-  return data ?? []
+  const rows = (data ?? []) as HomeGameRow[]
+  return rows.map(mapHomeGameRow)
 }

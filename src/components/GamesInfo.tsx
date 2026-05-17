@@ -21,7 +21,7 @@ export default function GamesInfo(item: GamesType) {
       </View>
       <View style={styles.info}>
         <Text>{formatted}</Text>
-        <Text>{item.hour}Heure</Text>
+        <Text>Heure : {item.hour}</Text>
         <Text>{item.Teams?.name || 'Unknown Team'}</Text>
       </View>
     </TouchableOpacity>
